@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODS 11 - SIG</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <style>
+      .spaced-section {
+          margin-bottom: 40px;
+      }
+      .section-title {
+          font-weight: bold;
+          margin-bottom: 10px;
+      }
+      .section-header {
+          margin-top: 40px;
+      }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-light py-2 border-bottom px-1">
+        <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap">
+        
+        <div class="d-flex align-items-center gap-2">
+            <img src="./img/ufpr.png" alt="UFPR" height="40">
+            <img src="./img/ct.png" alt="Centro de Tecnologia" height="40">
+            <img src="./img/geomatica.png" alt="Geomática" height="40">
+            <img src="./img/carto.png" alt="Engenharia Cartográfica" height="40">
+        </div>
+    
+        <div class="text-center mx-auto">
+            <h5 class="mb-0 fw-semibold">Coordinate Conversion Tool</h5>
+        </div>
+        <div style="width: 15vw;"></div>
+        
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="flex-fill">
+        <div class="container my-5">
+            <p class="text-center"><b>Selecione o tipo de coordenada de entrada e saída.</b></p>
+
+            <!-- Formulário de seleção -->
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <form id="coordForm">
+                        <div class="mb-3">
+                            <label for="inputType" class="form-label">Tipo de Coordenada de Entrada</label>
+                            <select class="form-select" id="inputType" required>
+                                <option value="">Selecione...</option>
+                                <option value="elipsoidais">Coordenadas Elipsoidais (φ, λ, h)</option>
+                                <option value="cartesianas">Coordenadas Cartesianas (X, Y, Z)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="outputType" class="form-label">Tipo de Coordenada de Saída</label>
+                            <select class="form-select" id="outputType" required>
+                                <option value="">Selecione...</option>
+                                <option value="cartesianas">Coordenadas Cartesianas (X, Y, Z)</option>
+                                <option value="elipsoidais">Coordenadas Elipsoidais (φ, λ, h)</option>
+                            </select>
+                        </div>
+
+                        <!-- Seção de coordenadas Elipsoidais -->
+                        <div id="elipsoidaisInputs" class="d-none spaced-section">
+                            <div class="section-header">
+                                <h5 class="section-title">Entrada: Coordenadas Elipsoidais (φ, λ, h)</h5>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="mb-2">
+                                    <label for="input_phi_grau" class="form-label">φ <b>(º)</b></label>
+                                    <input type="number" step="any" class="form-control" id="input_phi_grau" placeholder="Grau" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="input_phi_min" class="form-label">φ <b>(')</b></label>
+                                    <input type="number" step="any" class="form-control" id="input_phi_min" placeholder="Minuto" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="input_phi_seg" class="form-label">φ <b>(")</b></label>
+                                    <input type="number" step="any" class="form-control" id="input_phi_seg" placeholder="Segundo" required>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="mb-2">
+                                    <label for="input_lambda_grau" class="form-label">λ <b>(º)</b></label>
+                                    <input type="number" step="any" class="form-control" id="input_lambda_grau" placeholder="Grau" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="input_lambda_min" class="form-label">λ <b>(')</b></label>
+                                    <input type="number" step="any" class="form-control" id="input_lambda_min" placeholder="Minuto" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="input_lambda_seg" class="form-label">λ <b>(")</b></label>
+                                    <input type="number" step="any" class="form-control" id="input_lambda_seg" placeholder="Segundo" required>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label for="input_h" class="form-label">h (m)</label>
+                                <input type="number" step="any" class="form-control" id="input_h" placeholder="0" required>
+                            </div>
+                        </div>
+
+                        <!-- Seção de coordenadas Cartesianas -->
+                        <div id="cartesianasInputs" class="d-none spaced-section">
+                            <div class="section-header">
+                                <h5 class="section-title">Entrada: Coordenadas Cartesianas (X, Y, Z)</h5>
+                            </div>
+                            <div class="mb-2">
+                                <label for="input_X" class="form-label">X (m)</label>
+                                <input type="number" step="any" class="form-control" id="input_X" placeholder="0" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="input_Y" class="form-label">Y (m)</label>
+                                <input type="number" step="any" class="form-control" id="input_Y" placeholder="0" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="input_Z" class="form-label">Z (m)</label>
+                                <input type="number" step="any" class="form-control" id="input_Z" placeholder="0" required>
+                            </div>
+                        </div>
+
+                        <!-- Seção de coordenadas Elipsoidais (Saída) -->
+                        <div id="elipsoidaisOutputs" class="d-none spaced-section">
+                            <div class="section-header">
+                                <h5 class="section-title">Saída: Coordenadas Elipsoidais (φ, λ, h)</h5>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="mb-2">
+                                    <label for="output_phi_grau" class="form-label">φ <b>(º)</b></label>
+                                    <input type="number" step="any" class="form-control" id="output_phi_grau" placeholder="Grau" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="output_phi_min" class="form-label">φ <b>(')</b></label>
+                                    <input type="number" step="any" class="form-control" id="output_phi_min" placeholder="Minuto" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="output_phi_seg" class="form-label">φ <b>(")</b></label>
+                                    <input type="number" step="any" class="form-control" id="output_phi_seg" placeholder="Segundo" required>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="mb-2">
+                                    <label for="output_lambda_grau" class="form-label">λ <b>(º)</b></label>
+                                    <input type="number" step="any" class="form-control" id="output_lambda_grau" placeholder="Grau" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="output_lambda_min" class="form-label">λ <b>(')</b></label>
+                                    <input type="number" step="any" class="form-control" id="output_lambda_min" placeholder="Minuto" required>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="output_lambda_seg" class="form-label">λ <b>(")</b></label>
+                                    <input type="number" step="any" class="form-control" id="output_lambda_seg" placeholder="Segundo" required>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label for="output_h" class="form-label">h (m)</label>
+                                <input type="number" step="any" class="form-control" id="output_h" placeholder="0" required>
+                            </div>
+                        </div>
+
+                        <!-- Seção de coordenadas Cartesianas (Saída) -->
+                        <div id="cartesianasOutputs" class="d-none spaced-section">
+                            <div class="section-header">
+                                <h5 class="section-title">Saída: Coordenadas Cartesianas (X, Y, Z)</h5>
+                            </div>
+                            <div class="mb-2">
+                                <label for="output_X" class="form-label">X (m)</label>
+                                <input type="number" step="any" class="form-control" id="output_X" placeholder="0" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="output_Y" class="form-label">Y (m)</label>
+                                <input type="number" step="any" class="form-control" id="output_Y" placeholder="0" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="output_Z" class="form-label">Z (m)</label>
+                                <input type="number" step="any" class="form-control" id="output_Z" placeholder="0" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Converter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-white py-2 mt-auto">
+        <p style="margin: 0;">&copy; 2025 Glória Maria Deitos Gomes da Silva.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/selecao.js" defer></script>
+</body>
+</html>
